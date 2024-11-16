@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt = $pdo->prepare("SELECT COUNT(*) FROM usuarios WHERE nome = :nome");
         $stmt->bindParam(':nome', $nome);
         $stmt->execute();
-        $userExists = $stmt->fetchColumn();
+        $userExists = $stmt->fetchColumn(); 
 
         if ($userExists) {
             $error = "Nome de usuário já existe. Escolha outro.";

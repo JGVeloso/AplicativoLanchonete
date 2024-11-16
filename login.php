@@ -14,18 +14,18 @@ include 'banco.php';
 <?php
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nome = $_POST['nome'];
-    $senha = $_POST['senha'];
+    $password = $_POST['password'];
 
     // Consulta o usuário no banco de dados
     $stmt = $pdo->prepare("SELECT * FROM usuarios WHERE nome = :nome");
     $stmt->bindParam(':nome', $nome);
     $stmt->execute();
-    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+    $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    if ($user && password_verify($senha, $user['senha'])) {
+    if ($usuario && password_verify($password, $usuario['password'])) {
         // Login bem-sucedido
         session_start();
-        $_SESSION['user_id'] = $user['id'];
+        $_SESSION['usuario_id'] = $usuario['id'];
         echo "Login realizado com sucesso!";
         // Redirecionar para a página principal
         header("Location: home.php");
@@ -47,8 +47,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <label for="nome">Usuário:</label>
         <input type="text" name="nome" id="nome" required><br>
 
-        <label for="senha">Senha:</label>
-        <input type="password" name="senha" id="senha" required><br>
+        <label for="password">Senha:</label>
+        <input type="password" name="password" id="password" required><br>
 
         <button type="submit">Entrar</button>
     </form>

@@ -4,7 +4,8 @@
                     "id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
                     "nome" VARCHAR NOT NULL,
                     "departamento" VARCHAR NOT NULL,
-                    "password" TEXT NOT NULL  )'
+                    "password" TEXT NOT NULL,
+                    "vendedor"  INT NOT NULL DEFAULT 0 )'
                     );
         $db-> query('CREATE TABLE IF NOT EXISTS "estoque" (
                     "id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
