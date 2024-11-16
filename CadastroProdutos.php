@@ -1,27 +1,38 @@
 <?php
-// CadastroProdutos.php
+// cadastro_produto.php
 include 'banco.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $produto = $_POST['produto'];
     $preco = $_POST['preco'];
     $quantidade = $_POST['quantidade'];
+    $imagem = '';
 
-    // Verifica se todos os campos foram preenchidos
-    if (empty($produto) || empty($preco) || empty($quantidade)) {
-        $error = "Por favor, preencha todos os campos.";
-    } else {
-        // Insere o produto no banco de dados
+    // Verifica se uma imagem foi enviada
+    if (!empty($_FILES['imagem']['name'])) {
+        $upload_dir = 'uploads/';
+        if (!is_dir($upload_dir)) {
+            mkdir($upload_dir, 0777, true); // Cria o diretório se não existir
+        }
+
+        $imagem = $upload_dir . basename($_FILES['imagem']['name']);
+        if (!move_uploaded_file($_FILES['imagem']['tmp_name'], $imagem)) {
+            $error = "Erro ao salvar a imagem.";
+        }
+    }
+
+    if (empty($error)) {
         try {
-            $stmt = $pdo->prepare("INSERT INTO estoque (produto, preco, quantidade) VALUES (:produto, :preco, :quantidade)");
+            $stmt = $pdo->prepare("INSERT INTO estoque (produto, preco, quantidade, imagem) VALUES (:produto, :preco, :quantidade, :imagem)");
             $stmt->bindParam(':produto', $produto);
             $stmt->bindParam(':preco', $preco);
             $stmt->bindParam(':quantidade', $quantidade);
+            $stmt->bindParam(':imagem', $imagem);
 
             if ($stmt->execute()) {
                 $success = "Produto cadastrado com sucesso!";
             } else {
-                $error = "Erro ao cadastrar o produto. Tente novamente.";
+                $error = "Erro ao cadastrar o produto.";
             }
         } catch (PDOException $e) {
             $error = "Erro no banco de dados: " . $e->getMessage();
@@ -29,6 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -103,18 +115,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="message success"><?php echo $success; ?></div>
         <?php endif; ?>
 
-        <form action="CadastroProdutos.php" method="POST">
-            <label for="produto">Nome do Produto:</label>
-            <input type="text" name="produto" id="produto" required>
+        <form action="CadastroProdutos.php" method="POST" enctype="multipart/form-data">
+    <label for="produto">Nome do Produto:</label>
+    <input type="text" name="produto" id="produto" required>
 
-            <label for="preco">Preço:</label>
-            <input type="number" name="preco" id="preco" step="0.01" required>
+    <label for="preco">Preço:</label>
+    <input type="number" name="preco" id="preco" step="0.01" required>
 
-            <label for="quantidade">Quantidade:</label>
-            <input type="number" name="quantidade" id="quantidade" required>
+    <label for="quantidade">Quantidade:</label>
+    <input type="number" name="quantidade" id="quantidade" required>
 
-            <button type="submit">Cadastrar Produto</button>
-        </form>
+    <label for="imagem">Imagem do Produto:</label>
+    <input type="file" name="imagem" id="imagem" accept="image/*">
+
+    <button type="submit">Cadastrar Produto</button>
+</form>
+
     </div>
 </body>
 </html>

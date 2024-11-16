@@ -58,17 +58,23 @@ $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Escolha seu lanche</h1>
+<div class="container">
+        <h1>Estoque de Produtos</h1>
         <?php foreach ($produtos as $produto): ?>
             <div class="item">
-                <h3><?php echo htmlspecialchars($produto['produto']); ?></h3>
-                <p><strong>Preço:</strong> R$ <?php echo number_format($produto['preco'], 2, ',', '.'); ?></p>
-                <p><strong>Quantidade:</strong> <?php echo htmlspecialchars($produto['quantidade']); ?> unidades</p>
-                <button 
-                    onclick="alert('Você escolheu: <?php echo htmlspecialchars($produto['produto']); ?>')">
-                    Escolher
-                </button>
+                <?php if (!empty($produto['imagem'])): ?>
+                    <img src="<?php echo htmlspecialchars($produto['imagem']); ?>" alt="<?php echo htmlspecialchars($produto['produto']); ?>">
+                <?php else: ?>
+                    <img src="placeholder.png" alt="Imagem não disponível">
+                <?php endif; ?>
+                <div>
+                    <h3><?php echo htmlspecialchars($produto['produto']); ?></h3>
+                    <p><strong>Preço:</strong> R$ <?php echo number_format($produto['preco'], 2, ',', '.'); ?></p>
+                    <p><strong>Quantidade:</strong> <?php echo htmlspecialchars($produto['quantidade']); ?> unidades</p>
+                    <button onclick="alert('Você escolheu: <?php echo htmlspecialchars($produto['produto']); ?>')">
+                        Escolher
+                    </button>
+                </div>
             </div>
         <?php endforeach; ?>
     </div>
