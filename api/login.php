@@ -26,9 +26,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                     // Redireciona com base no tipo de usuário
                     if ($usuario['vendedor'] == 1) {
-                        header('Location: pages/vendedor.php');
+                        header('Location: vendedor.php');
                     } else {
-                        header('Location: pages/home.php');
+                        header('Location: home.php');
                     }
                     exit();
                 } else {
