@@ -9,6 +9,12 @@ $pedidos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+    <script>
+        
+        setTimeout(() => {
+            window.location.reload();
+        }, 60000); 
+    </script>
     <meta charset="UTF-8">
     <title>Controle de Pedidos</title>
     <style>

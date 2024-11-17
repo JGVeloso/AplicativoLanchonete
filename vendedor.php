@@ -17,7 +17,7 @@ $nome = $_SESSION['nome'];
     <title>Área do Vendedor</title>
 </head>
 <body>
-    <h1>Bem-vindo, <?php echo htmlspecialchars($nome); ?>!</h1>
+    <h1>Bem-vindo  <?php echo htmlspecialchars($nome); ?> !</h1>
     <p>Escolha uma das opções abaixo:</p>
     <ul>
         <li><a href="cadastroprodutos.php">Cadastrar Produtos</a></li>
