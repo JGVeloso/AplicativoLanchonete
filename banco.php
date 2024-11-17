@@ -37,14 +37,14 @@ try {
         imagem TEXT
     )");
     $pdo->exec("CREATE TABLE IF NOT EXISTS pedidos (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        produto TEXT NOT NULL,
-        quantidade INTEGER NOT NULL,
-        preco_total REAL NOT NULL,
-        nome TEXT NOT NULL,
-        departamento TEXT NOT NULL,
-        data_pedido TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-    )");
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    nome TEXT NOT NULL,
+    departamento TEXT NOT NULL,
+    produto TEXT NOT NULL,
+    quantidade INTEGER NOT NULL,
+    preco_total REAL NOT NULL,
+    metodo_pagamento TEXT NOT NULL 
+);");
 } catch (PDOException $e) {
     die("Erro ao conectar ao banco de dados: " . $e->getMessage());
 }

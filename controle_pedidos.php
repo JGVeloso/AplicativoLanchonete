@@ -3,7 +3,7 @@
 include 'banco.php';
 
 // Busca todos os pedidos
-$stmt = $pdo->query("SELECT * FROM pedidos ORDER BY data_pedido DESC");
+// $stmt = $pdo->query("SELECT * FROM pedidos ORDER BY data_pedido DESC");
 $pedidos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <!DOCTYPE html>
@@ -32,32 +32,31 @@ $pedidos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <body>
     <div class="container">
         <h1>Controle de Pedidos</h1>
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Produto</th>
-                    <th>Quantidade</th>
-                    <th>Preço Total</th>
-                    <th>Usuário</th>
-                    <th>Departamento</th>
-                    <th>Data do Pedido</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($pedidos as $pedido): ?>
-                    <tr>
-                        <td><?php echo $pedido['id']; ?></td>
-                        <td><?php echo htmlspecialchars($pedido['produto']); ?></td>
-                        <td><?php echo $pedido['quantidade']; ?></td>
-                        <td>R$ <?php echo number_format($pedido['preco_total'], 2, ',', '.'); ?></td>
-                        <td><?php echo htmlspecialchars($pedido['nome']); ?></td>
-                        <td><?php echo htmlspecialchars($pedido['departamento']); ?></td>
-                        <td><?php echo $pedido['data_pedido']; ?></td>
-                    </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
+        <table border="1">
+    <tr>
+        <th>ID</th>
+        <th>Usuário</th>
+        <th>Departamento</th>
+        <th>Produto</th>
+        <th>Quantidade</th>
+        <th>Preço Total</th>
+        <th>Método de Pagamento</th> <!-- Nova coluna -->
+    </tr>
+    <?php
+    $stmt = $pdo->query("SELECT * FROM pedidos");
+    while ($pedido = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        echo "<tr>
+                <td>{$pedido['id']}</td>
+                <td>{$pedido['nome']}</td>
+                <td>{$pedido['departamento']}</td>
+                <td>{$pedido['produto']}</td>
+                <td>{$pedido['quantidade']}</td>
+                <td>R$ {$pedido['preco_total']}</td>
+                <td>{$pedido['metodo_pagamento']}</td> <!-- Exibe o método de pagamento -->
+              </tr>";
+    }
+    ?>
+</table>
     </div>
 </body>
 </html>
