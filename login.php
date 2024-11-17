@@ -1,6 +1,6 @@
 <?php
 session_start();
-include 'banco.php';
+include 'pages/banco.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nome = $_POST['nome'];
@@ -26,9 +26,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                     // Redireciona com base no tipo de usuário
                     if ($usuario['vendedor'] == 1) {
-                        header('Location: vendedor.php');
+                        header('Location: pages/vendedor.php');
                     } else {
-                        header('Location: home.php');
+                        header('Location: pages/home.php');
                     }
                     exit();
                 } else {
