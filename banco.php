@@ -29,6 +29,22 @@ try {
     if (!in_array('imagem', $colunas)) {
         $pdo->exec("ALTER TABLE estoque ADD COLUMN imagem TEXT");
     }
+    $pdo->exec("CREATE TABLE IF NOT EXISTS estoque (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        produto TEXT NOT NULL,
+        preco REAL NOT NULL,
+        quantidade INTEGER NOT NULL,
+        imagem TEXT
+    )");
+    $pdo->exec("CREATE TABLE IF NOT EXISTS pedidos (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        produto TEXT NOT NULL,
+        quantidade INTEGER NOT NULL,
+        preco_total REAL NOT NULL,
+        nome TEXT NOT NULL,
+        departamento TEXT NOT NULL,
+        data_pedido TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    )");
 } catch (PDOException $e) {
     die("Erro ao conectar ao banco de dados: " . $e->getMessage());
 }
