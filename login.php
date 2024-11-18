@@ -1,6 +1,6 @@
 <?php
 session_start();
-include 'pages/banco.php';
+include 'banco.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nome = $_POST['nome'];
@@ -49,9 +49,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <h1>Login</h1>
+    <h1 class="login">Login</h1>
+    <div class="login">
     <?php if (isset($erro)): ?>
         <p style="color: red;"><?php echo $erro; ?></p>
     <?php endif; ?>
@@ -62,8 +64,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <label for="password">Senha:</label>
         <input type="password" id="password" name="password" required>
         <br>
-        <button type="submit">Entrar</button>
+        <button type="submit" class="entrar">Entrar</button>
     </form>
-    <p>Não tem uma conta? <a href="register.php">Crie uma conta!</a>.</p>
+    </div>
+    <p class="login">Não tem uma conta? <a href="register.php">Crie uma conta!</a>.</p>
 </body>
 </html>

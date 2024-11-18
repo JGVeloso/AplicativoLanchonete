@@ -15,6 +15,7 @@ $nome = $_SESSION['nome'];
 <head>
     <meta charset="UTF-8">
     <title>Área do Vendedor</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
     <h1>Bem-vindo  <?php echo htmlspecialchars($nome); ?> !</h1>

@@ -59,59 +59,13 @@ $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <head>
     <meta charset="UTF-8">
     <title>Escolha sua comida</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f9f9f9;
-        }
-        .container {
-            max-width: 800px;
-            margin: 20px auto;
-            padding: 20px;
-            background: #fff;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-        .item {
-            margin-bottom: 20px;
-            padding: 15px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            background-color: #fafafa;
-        }
-        .item h3 {
-            margin: 0;
-            font-size: 20px;
-        }
-        .item p {
-            margin: 5px 0;
-            color: #555;
-        }
-        .item button {
-            margin-top: 10px;
-            padding: 10px 15px;
-            font-size: 14px;
-            background: #007BFF;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        .item button:hover {
-            background: #0056b3;
-        }
-        img {
-            width: 80px;
-        }
-    </style>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-<h1>Bem-vindo, <?php echo htmlspecialchars($nome); ?> (<?php echo htmlspecialchars($departamento); ?>)</h1>
+<h1 class="bemvindo">Bem-vindo, <?php echo htmlspecialchars($nome); ?> (<?php echo htmlspecialchars($departamento); ?>)</h1>
 <a href="logout.php">Sair</a>
 <div class="container">
-    <h1>Estoque de Produtos</h1>
+    <h1>Escolha seu Lanche! </h1>
 
     <?php if (isset($success)) : ?>
         <div class="message success"><?php echo $success; ?></div>
