@@ -97,6 +97,7 @@ try {
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+<div class="pedidos">
     <h1>Editar Produto</h1>
     <?php if (isset($success)): ?>
         <p style="color: green;"><?php echo $success; ?></p>
@@ -150,5 +151,6 @@ try {
     </form>
 
     <a href="cadastroprodutos.php">Voltar</a>
+    </div>
 </body>
 </html>

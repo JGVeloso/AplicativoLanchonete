@@ -12,6 +12,13 @@ body {
     width: 190px;
     padding-top: 15px;
 }
+.cabecalho{
+    align-content: flex-start;
+}
+.logotipohome{
+    height: auto;
+    margin: 7px;
+}
 .login {
     display: flex;
     justify-content: center;
@@ -118,7 +125,7 @@ table th {
     margin-bottom: 10px;
 }
 .pedidos {
-    max-width: 800px;
+    max-width: 900px;
     margin: 20px auto;
     padding: 15px;
     background: #fff;
