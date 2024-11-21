@@ -4,18 +4,56 @@ body {
     margin: 0;
     padding: 0;
 }
-
+.logotipo{
+    display:flexbox;
+    justify-content: center;
+    align-items: center;
+    margin-left: 44%;
+    width: 190px;
+    padding-top: 15px;
+}
 .login {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding-top: 70px;
+    padding-top: 10px;
+}
+.crie{
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .entrar {
+    cursor: pointer;
     align-items: center;
-    display: flex;
-    margin-left: 45%;
-    margin-top: 15%;
+    justify-content: center;
+    display: block;
+    /* margin-top: 18%; */
+    width: 100%;
+    margin-left: 5%;
+    padding: 0.4375rem 0.75rem;
+    font-size: 0.875rem;
+    font-weight: 400;
+    line-height: 1.4285714286;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+    border: 1px solid #d9dbde;
+    
+}
+.form{
+    display: block;
+    width: 100%;
+    padding: 0.4375rem 0.75rem;
+    font-size: 0.875rem;
+    font-weight: 400;
+    line-height: 1.4285714286;
+    color: inherit;
+    background-color: #fdfdfd;
+    background-clip: padding-box;
+    border: 1px solid #d9dbde;
+    appearance: none;
+    border-radius: 4px;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 img {
     width: 80px;
@@ -31,7 +69,7 @@ img {
 }
 .item {
     margin-bottom: 20px;
-    padding: 15px;
+    padding: 1px;
     border: 1px solid #ddd;
     border-radius: 8px;
     background-color: #fafafa;
@@ -58,4 +96,48 @@ img {
 }
 .item button:hover {
     background: #0056b3;
+}
+table {
+    width: 75%;
+    border-collapse: collapse;
+}
+table th, table td {
+    padding: 7px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+table th {
+    background-color: #f4f4f4;
+}
+.success {
+    color: green;
+    margin-bottom: 10px;
+}
+.error {
+    color: red;
+    margin-bottom: 10px;
+}
+.pedidos {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 15px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+button {
+    padding: 5px 3px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+button:hover {
+    background-color: #218838;
+}
+.disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
 }

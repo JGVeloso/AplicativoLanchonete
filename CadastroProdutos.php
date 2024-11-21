@@ -4,6 +4,7 @@ include 'banco.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $produto = $_POST['produto'];
+    $descricao = $_POST['descricao']; // Captura a descrição do produto
     $preco = $_POST['preco'];
     $quantidade = $_POST['quantidade'];
     $imagem = '';
@@ -23,8 +24,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (empty($error)) {
         try {
-            $stmt = $pdo->prepare("INSERT INTO estoque (produto, preco, quantidade, imagem) VALUES (:produto, :preco, :quantidade, :imagem)");
+            $stmt = $pdo->prepare("INSERT INTO estoque (produto, descricao, preco, quantidade, imagem) VALUES (:produto, :descricao, :preco, :quantidade, :imagem)");
             $stmt->bindParam(':produto', $produto);
+            $stmt->bindParam(':descricao', $descricao);
             $stmt->bindParam(':preco', $preco);
             $stmt->bindParam(':quantidade', $quantidade);
             $stmt->bindParam(':imagem', $imagem);
@@ -39,21 +41,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 }
-?>
 
+$stmt = $pdo->query("SELECT * FROM estoque"); // Consulta ao banco
+$produtos = $stmt->fetchAll(PDO::FETCH_ASSOC); // Recupera todos os produtos
+
+?>
 
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <title>Cadastro de Produto</title>
+    <link rel="stylesheet" href="css/style.css">
     <style>
-        body {
+        /* body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
             background-color: #f9f9f9;
-        }
+        } */
         .container {
             max-width: 500px;
             margin: 50px auto;
@@ -66,7 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             display: block;
             margin: 10px 0 5px;
         }
-        form input {
+        form input, form textarea {
             width: 100%;
             padding: 10px;
             margin-bottom: 10px;
@@ -115,7 +121,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="message success"><?php echo $success; ?></div>
         <?php endif; ?>
 
-        <form action="CadastroProdutos.php" method="POST" enctype="multipart/form-data">
+        <?php
+// Busca as categorias do banco de dados
+$stmtCategorias = $pdo->query("SELECT * FROM categorias");
+$categorias = $stmtCategorias->fetchAll(PDO::FETCH_ASSOC);
+?>
+
+<form action="cadastro_produto.php" method="POST" enctype="multipart/form-data">
     <label for="produto">Nome do Produto:</label>
     <input type="text" name="produto" id="produto" required>
 
@@ -125,12 +137,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <label for="quantidade">Quantidade:</label>
     <input type="number" name="quantidade" id="quantidade" required>
 
+    <label for="categoria">Categoria:</label>
+    <select name="categoria" id="categoria" required>
+        <option value="">Selecione uma categoria</option>
+        <?php foreach ($categorias as $categoria): ?>
+            <option value="<?php echo $categoria['id']; ?>">
+                <?php echo htmlspecialchars($categoria['nome']); ?>
+            </option>
+        <?php endforeach; ?>
+    </select>
+
     <label for="imagem">Imagem do Produto:</label>
     <input type="file" name="imagem" id="imagem" accept="image/*">
 
     <button type="submit">Cadastrar Produto</button>
 </form>
 
+
+        <h2>Produtos Cadastrados</h2>
+        <?php foreach ($produtos as $produto): ?>
+            <div class="item">
+                <p><strong>Produto:</strong> <?php echo htmlspecialchars($produto['produto']); ?></p>
+                <p><strong>Descrição:</strong> <?php echo htmlspecialchars($produto['descricao']); ?></p>
+                <p><strong>Preço:</strong> R$ <?php echo number_format($produto['preco'], 2, ',', '.'); ?></p>
+                <p><strong>Quantidade:</strong> <?php echo htmlspecialchars($produto['quantidade']); ?> unidades</p>
+                <a href="editar_produto.php?id=<?php echo $produto['id']; ?>">Editar</a>
+            </div>
+        <?php endforeach; ?>
     </div>
 </body>
 </html>

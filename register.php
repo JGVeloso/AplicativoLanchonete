@@ -47,8 +47,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <title>Cadastro de Usuário</title>
 </head>
 <body>
-    <h2>Cadastro de Usuário</h2>
-
+    <h2 class="login">Cadastro de Usuário</h2>
+    <div class="login">
     <?php if (isset($error)) : ?>
         <p style="color: red;"><?php echo $error; ?></p>
     <?php endif; ?>
@@ -59,17 +59,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <form action="register.php" method="POST">
         <label for="nome">Nome de Usuário:</label>
-        <input type="text" name="nome" id="nome" required><br>
+        <input type="text" name="nome" class="form" id="nome" required><br>
 
         <label for="password">Senha:</label>
-        <input type="password" name="password" id="password" required><br>
+        <input type="password" name="password" class="form" id="password" required><br>
 
         <label for="departamento">Departamento:</label>
-        <input type="text" name="departamento" id="departamento" required><br>
+        <input type="text" name="departamento" class="form" id="departamento" required><br>
 
-        <button type="submit">Registrar</button>
+        <button type="submit" class="entrar">Registrar</button>
     </form>
-
-    <p>Já tem uma conta? <a href="login.php">Faça login</a>.</p>
+        </div>
+    <p class="login">Já tem uma conta? </p>
+    <a class="crie" href="login.php">Faça login</a>
 </body>
 </html>

@@ -52,21 +52,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+    <img class="logotipo" src="logo.jpg" alt="imagem do logotipo da lanchonete">
     <h1 class="login">Login</h1>
     <div class="login">
     <?php if (isset($erro)): ?>
         <p style="color: red;"><?php echo $erro; ?></p>
     <?php endif; ?>
     <form action="login.php" method="POST">
-        <label for="nome">Nome:</label>
-        <input type="text" id="nome" name="nome" required>
+        <label for="nome">Nome: </label>
+        <input type="text" class="form" id="nome" name="nome" required>
         <br>
-        <label for="password">Senha:</label>
-        <input type="password" id="password" name="password" required>
+        <label for="password">Senha: </label>
+        <input type="password" class="form" id="password" name="password" required>
         <br>
         <button type="submit" class="entrar">Entrar</button>
     </form>
     </div>
-    <p class="login">Não tem uma conta? <a href="register.php">Crie uma conta!</a>.</p>
+    <p class="login">Não tem uma conta? </p>
+    <a class="crie" href="register.php"> Crie uma conta!</a>
 </body>
 </html>

@@ -49,9 +49,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_produto'])) {
     }
 }
 
-// Busca os produtos
-$stmt = $pdo->query("SELECT * FROM estoque");
-$produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+// Busca as categorias
+$stmtCategorias = $pdo->query("SELECT * FROM categorias");
+$categorias = $stmtCategorias->fetchAll(PDO::FETCH_ASSOC);
+
+// Busca os produtos, agrupando por categoria
+$stmtProdutos = $pdo->query("SELECT * FROM estoque ORDER BY categoria_id");
+$produtos = $stmtProdutos->fetchAll(PDO::FETCH_ASSOC);
+
+// Organiza os produtos por categoria
+$produtosPorCategoria = [];
+foreach ($produtos as $produto) {
+    $produtosPorCategoria[$produto['categoria_id']][] = $produto;
+}
 ?>
 
 <!DOCTYPE html>
@@ -75,34 +85,43 @@ $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <div class="message error"><?php echo $error; ?></div>
     <?php endif; ?>
 
-    <?php foreach ($produtos as $produto): ?>
-        <div class="item">
-            <?php if (!empty($produto['imagem'])): ?>
-                <img src="<?php echo htmlspecialchars($produto['imagem']); ?>" alt="<?php echo htmlspecialchars($produto['produto']); ?>">
-            <?php else: ?>
-                <img src="placeholder.png" alt="Imagem não disponível">
-            <?php endif; ?>
-            <div>
-                <h3><?php echo htmlspecialchars($produto['produto']); ?></h3>
-                <p><strong>Preço:</strong> R$ <?php echo number_format($produto['preco'], 2, ',', '.'); ?></p>
-                <p><strong>Quantidade em Estoque:</strong> <?php echo htmlspecialchars($produto['quantidade']); ?> unidades</p>
+    <?php foreach ($categorias as $categoria): ?>
+        <h2><?php echo htmlspecialchars($categoria['nome']); ?></h2>
 
-                <form action="home.php" method="POST">
-                    <input type="hidden" name="id_produto" value="<?php echo $produto['id']; ?>">
-                    <label for="quantidade_<?php echo $produto['id']; ?>">Quantidade:</label>
-                    <input type="number" name="quantidade" id="quantidade_<?php echo $produto['id']; ?>" min="1" max="<?php echo $produto['quantidade']; ?>" required>
-                    <br>
-                    <label for="metodo_pagamento_<?php echo $produto['id']; ?>">Método de Pagamento:</label>
-                    <select name="metodo_pagamento" id="metodo_pagamento_<?php echo $produto['id']; ?>" required>
-                        <option value="pix">Pix</option>
-                        <option value="dinheiro">Dinheiro</option>
-                        <option value="cartao">Cartão</option>
-                    </select>
-                    <br>
-                    <button type="submit">Fazer Pedido</button>
-                </form>
-            </div>
-        </div>
+        <?php if (isset($produtosPorCategoria[$categoria['id']])): ?>
+            <?php foreach ($produtosPorCategoria[$categoria['id']] as $produto): ?>
+                <div class="item">
+                    <?php if (!empty($produto['imagem'])): ?>
+                        <img src="<?php echo htmlspecialchars($produto['imagem']); ?>" alt="<?php echo htmlspecialchars($produto['produto']); ?>">
+                    <?php else: ?>
+                        <img src="placeholder.png" alt="Imagem não disponível">
+                    <?php endif; ?>
+                    <div>
+                        <h3><?php echo htmlspecialchars($produto['produto']); ?></h3>
+                        <p><strong>Preço:</strong> R$ <?php echo number_format($produto['preco'], 2, ',', '.'); ?></p>
+                        <p><strong>Quantidade em Estoque:</strong> <?php echo htmlspecialchars($produto['quantidade']); ?> unidades</p>
+
+                        <form action="home.php" method="POST">
+                            <input type="hidden" name="id_produto" value="<?php echo $produto['id']; ?>">
+                            <label for="quantidade_<?php echo $produto['id']; ?>">Quantidade:</label>
+                            <input type="number" name="quantidade" id="quantidade_<?php echo $produto['id']; ?>" min="1" max="<?php echo $produto['quantidade']; ?>" required>
+                            <br>
+                            <label for="metodo_pagamento_<?php echo $produto['id']; ?>">Método de Pagamento:</label>
+                            <select name="metodo_pagamento" id="metodo_pagamento_<?php echo $produto['id']; ?>" required>
+                                <option value="pix">Pix</option>
+                                <option value="dinheiro">Dinheiro</option>
+                                <option value="cartao">Cartão</option>
+                            </select>
+                            <br>
+                            <p><strong>Descrição:</strong> <?php echo htmlspecialchars($produto['descricao']); ?></p>
+                            <button type="submit">Fazer Pedido</button>
+                        </form>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <p>Não há produtos disponíveis nesta categoria.</p>
+        <?php endif; ?>
     <?php endforeach; ?>
 </div>
 </body>
